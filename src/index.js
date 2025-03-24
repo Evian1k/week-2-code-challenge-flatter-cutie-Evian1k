@@ -79,3 +79,6 @@ resetButton.addEventListener("click", () => {
     // Clear the form
   event.target.reset();
 });
+
+// Initialize the app
+fetchCharacters();
