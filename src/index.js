@@ -34,3 +34,17 @@ function displayCharacterDetails(character) {
     detailedInfo.dataset.characterId = character.id;
     detailedInfo.dataset.currentVotes = character.votes;
   }
+
+  // Handle votes form submission
+votesForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const voteCountElement = document.getElementById("vote-count");
+    const currentVotes = parseInt(detailedInfo.dataset.currentVotes || "0");
+    const additionalVotes = parseInt(votesInput.value || "0");
+    const newVotes = currentVotes + additionalVotes;
+  
+    voteCountElement.textContent = newVotes;
+    detailedInfo.dataset.currentVotes = newVotes;
+  
+    votesInput.value = ""; // Clear the input field
+  });
