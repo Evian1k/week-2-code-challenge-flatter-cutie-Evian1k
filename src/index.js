@@ -1,5 +1,4 @@
-// Your code here
-
+// Base URL for the API
 const BASE_URL = "http://localhost:3000/characters";
 
 // DOM Elements
@@ -10,7 +9,7 @@ const votesInput = document.getElementById("votes");
 const resetButton = document.getElementById("reset-btn");
 const characterForm = document.getElementById("character-form");
 
-/ Fetch all characters and populate the character bar
+// Fetch all characters and populate the character bar
 function fetchCharacters() {
   fetch(BASE_URL)
     .then((response) => response.json())
@@ -26,35 +25,47 @@ function fetchCharacters() {
 
 // Display character details in the detailed-info div
 function displayCharacterDetails(character) {
-    detailedInfo.innerHTML = `
-      <h2>${character.name}</h2>
-      <img src="${character.image}" alt="${character.name}">
-      <p>Votes: <span id="vote-count">${character.votes}</span></p>
-    `;
-    detailedInfo.dataset.characterId = character.id;
-    detailedInfo.dataset.currentVotes = character.votes;
-  }
+  detailedInfo.innerHTML = `
+    <h2>${character.name}</h2>
+    <img src="${character.image}" alt="${character.name}">
+    <p>Votes: <span id="vote-count">${character.votes}</span></p>
+  `;
+  detailedInfo.dataset.characterId = character.id;
+  detailedInfo.dataset.currentVotes = character.votes;
+}
 
-  // Handle votes form submission
+// Handle votes form submission
 votesForm.addEventListener("submit", (event) => {
-    event.preventDefault();
-    const voteCountElement = document.getElementById("vote-count");
-    const currentVotes = parseInt(detailedInfo.dataset.currentVotes || "0");
-    const additionalVotes = parseInt(votesInput.value || "0");
-    const newVotes = currentVotes + additionalVotes;
-  
-    voteCountElement.textContent = newVotes;
-    detailedInfo.dataset.currentVotes = newVotes;
-  
-    votesInput.value = ""; // Clear the input field
-  });
+  event.preventDefault();
+  const voteCountElement = document.getElementById("vote-count");
+  const currentVotes = parseInt(detailedInfo.dataset.currentVotes || "0");
+  const additionalVotes = parseInt(votesInput.value || "0");
+  const newVotes = currentVotes + additionalVotes;
 
-  // Handle reset votes button click
+  voteCountElement.textContent = newVotes;
+  detailedInfo.dataset.currentVotes = newVotes;
+
+  votesInput.value = ""; // Clear the input field
+});
+
+// Handle reset votes button click
 resetButton.addEventListener("click", () => {
-    const voteCountElement = document.getElementById("vote-count");
-    voteCountElement.textContent = "0";
-    detailedInfo.dataset.currentVotes = "0";
-  });
+  const voteCountElement = document.getElementById("vote-count");
+  voteCountElement.textContent = "0";
+  detailedInfo.dataset.currentVotes = "0";
+});
+
+// Handle new character form submission
+characterForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const name = event.target.name.value;
+  const image = event.target.image.value;
+
+  const newCharacter = {
+    name,
+    image,
+    votes: 0,
+  };
 
   // Add character to the server
   fetch(BASE_URL, {
@@ -76,7 +87,7 @@ resetButton.addEventListener("click", () => {
       displayCharacterDetails(character);
     });
 
-    // Clear the form
+  // Clear the form
   event.target.reset();
 });
 
