@@ -75,3 +75,7 @@ resetButton.addEventListener("click", () => {
       // Display character details immediately
       displayCharacterDetails(character);
     });
+
+    // Clear the form
+  event.target.reset();
+});
