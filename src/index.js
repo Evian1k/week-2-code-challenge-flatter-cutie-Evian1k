@@ -48,3 +48,10 @@ votesForm.addEventListener("submit", (event) => {
   
     votesInput.value = ""; // Clear the input field
   });
+
+  // Handle reset votes button click
+resetButton.addEventListener("click", () => {
+    const voteCountElement = document.getElementById("vote-count");
+    voteCountElement.textContent = "0";
+    detailedInfo.dataset.currentVotes = "0";
+  });
