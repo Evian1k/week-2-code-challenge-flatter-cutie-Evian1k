@@ -55,3 +55,23 @@ resetButton.addEventListener("click", () => {
     voteCountElement.textContent = "0";
     detailedInfo.dataset.currentVotes = "0";
   });
+
+  // Add character to the server
+  fetch(BASE_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(newCharacter),
+  })
+    .then((response) => response.json())
+    .then((character) => {
+      // Add character to the character bar
+      const span = document.createElement("span");
+      span.textContent = character.name;
+      span.addEventListener("click", () => displayCharacterDetails(character));
+      characterBar.appendChild(span);
+
+      // Display character details immediately
+      displayCharacterDetails(character);
+    });
